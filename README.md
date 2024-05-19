@@ -21,7 +21,8 @@ int cnt = gcd(nums.size(), k);
         } 
 ```
 方法三：reverse方法翻转，只需要会用reverse即可， 翻转思路还是比较简单的。
- 
+
+
 ## [跳跃游戏](https://leetcode.cn/problems/jump-game/?envType=study-plan-v2&envId=top-interview-150)
 在递归中，不要使用递归用的return 变量，这样会很乱，不如设置全局变量，然后退出标志是需要的，并需要一定的剪枝，这样最终一定是可以过的，只要好好的修改。
 
@@ -394,3 +395,18 @@ TreeNode* invertTree(TreeNode* root) {
         return root;
     }
 ```
+
+# 矩阵
+## [有效矩阵](https://leetcode.cn/problems/valid-sudoku/?envType=study-plan-v2&envId=top-interview-150)
+这一题不难，主要还是细心，然后不要小气数组的使用。
+
+
+## [矩阵旋转](https://leetcode.cn/problems/rotate-image/?envType=study-plan-v2&envId=top-interview-150)
+首先这道题主要是坐标转换，所以，需要自己多进行推导，在推导的时候，请不要带入具体的值，进行画图。
+公式：
+\text{temp} &amp; = \text{matrix}[row][col] \\
+\text{matrix}[row][col] &amp; = \text{matrix}[n - \text{col} - 1][row] \\
+\text{matrix}[n - \text{col} - 1][row] &amp; = \text{matrix}[n - \text{row} - 1][n - \text{col} - 1] \\
+\text{matrix}[n - \text{row} - 1][n - \text{col} - 1] &amp; = \text{matrix}[col][n - \text{row} - 1] \\
+\text{matrix}[col][n - \text{row} - 1] &amp; = \text{temp}
+\end{align*}
