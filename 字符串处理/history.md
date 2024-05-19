@@ -1,4 +1,3 @@
-# Learn-Algorithms
 # 数组
 ## [轮转数组](https://leetcode.cn/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150)
 **注意点：如果轮转长度超过数组长度，是取余而不是直接等于数组长度，这一点需要注意。**
