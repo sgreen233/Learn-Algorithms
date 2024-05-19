@@ -1,3 +1,48 @@
+# 5-19更新，不再用类别进行分类，而是使用技巧进行分类
+## k间隔轮转
+主要是通过交换temp和要赋值的，达到需要的效果。主要是将将要复制的替换到了temp中。
+```cpp
+int temp = nums[start];
+            do{
+                int next = (cur + k) % n;
+                swap(temp, nums[next]);
+                cur = next;
+            }while(cur != start);
+```
+## 矩阵调转
+矩阵调转，主要还是坐标转换，或者采用对称的方式进行调转
+转化通过
+1. 推导坐标，最后达到等式，将这个过程进行总结。
+2. 通过观察进行总结，得出结果。
+推荐使用方式1，因为最后方便判断区域。
+```cpp
+//原始推导公式展示
+for(int i = 0;i<row;i++){
+                matrix[i][j] = matrix[n - j - 1][i];
+                matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1];
+                matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1];
+                matrix[j][n - i - 1] = temp;
+            }
+```
+```cpp
+//使用轮转方法进行改编方式
+for(int i = 0;i<row;i++)
+            for(int j = 0;j<column;j++){
+                int x = i, y = j;
+                int temp = matrix[i][j];
+                do{
+                    int nextx = y;
+                    int nexty = n - x - 1;
+                    swap(temp, matrix[nextx][nexty]);
+                    x = nextx;
+                    y = nexty;
+                }while(x != i || y !=j);
+            }
+```
+
+
+
+
 # Learn-Algorithms
 # 数组
 ## [轮转数组](https://leetcode.cn/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150)
@@ -409,3 +454,6 @@ temp = matrix[row][col]
             matrix[n - col - 1][row] = matrix[n - row - 1][n - col - 1]
             matrix[n - row - 1][n - col - 1] = matrix[col][n - row - 1]
             matrix[col][n - row - 1] = temp
+
+
+
