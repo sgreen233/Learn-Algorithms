@@ -94,8 +94,26 @@ public:
 // 输出：false
  class Solution {
 public:
+    int getSum(int n){
+        int sum = 0;
+        while(n > 0){
+            sum = pow(n%10, 2);
+            n = n/10;
+        }
+        return sum;
+    }
     bool isHappy(int n) {
-        
+        //有可能无限递归，不知道是多少了
+        unordered_map <int, int> mp;
+        while(1){
+            int tmp = n;
+            int sum = getSum(n);
+            if(sum == 1)return true;
+            if(mp.count(n) && mp[n] == sum)return false;
+            else mp[n] = sum;
+            n = sum;
+        }
+        return false;
     }
 };
 
