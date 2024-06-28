@@ -188,6 +188,100 @@ public:
 
 
 
+// 给定一个  无重复元素 的 有序 整数数组 nums 。
 
+// 返回 恰好覆盖数组中所有数字 的 最小有序 区间范围列表 。也就是说，nums 的每个元素都恰好被某个区间范围所覆盖，并且不存在属于某个范围但不属于 nums 的数字 x 。
 
+// 列表中的每个区间范围 [a,b] 应该按如下格式输出：
 
+// "a->b" ，如果 a != b
+// "a" ，如果 a == b
+// 示例 1：
+
+// 输入：nums = [0,1,2,4,5,7]
+// 输出：["0->2","4->5","7"]
+// 解释：区间范围是：
+// [0,2] --> "0->2"
+// [4,5] --> "4->5"
+// [7,7] --> "7"
+// 示例 2：
+
+// 输入：nums = [0,2,3,4,6,8,9]
+// 输出：["0","2->4","6","8->9"]
+// 解释：区间范围是：
+// [0,0] --> "0"
+// [2,4] --> "2->4"
+// [6,6] --> "6"
+// [8,9] --> "8->9"
+ 
+
+// 提示：
+
+// 0 <= nums.length <= 20
+// -231 <= nums[i] <= 231 - 1
+// nums 中的所有值都 互不相同
+// nums 按升序排列
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        int n = nums.size();
+        vector<string> res;
+        int left = 0, right = 1;
+        while(left < n && right < n){
+            if(nums[right] == nums[right - 1] + 1 && right!= n - 1)right++;
+            else{
+                if(left == right - 1)strig tmp = to_string(nums[left]);
+                else string tmp += to_string(nums[left])+"->"+to_string(nums[right - 1]);
+                res.push_back(tmp);
+                left = right;
+                right = left + 1;
+            }
+        }
+        return res;
+    }
+};
+
+//以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
+//请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
+
+ 
+
+// 示例 1：
+
+// 输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
+// 输出：[[1,6],[8,10],[15,18]]
+// 解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+// 示例 2：
+
+// 输入：intervals = [[1,4],[4,5]]
+// 输出：[[1,5]]
+// 解释：区间 [1,4] 和 [4,5] 可被视为重叠区间。
+ 
+
+// 提示：
+
+// 1 <= intervals.length <= 104
+// intervals[i].length == 2
+// 0 <= starti <= endi <= 104
+class Solution {
+public:
+    bool vectorSort(vector<int> a, vector<int> b){
+        if(a.size() > 0 && b.size() > 0 && a[0] > b[0])return true;
+        return false;
+    }
+
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        //排序
+        //直接左端点排序，然后用merge数组存储最终结果
+        sort(intervals.begin(), intervals.end(), vectorSort);
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for(int i = 0;i<intervals.size();i++){
+            if(intervals[i][0] > res[res.size() - 1][1])res.push_back(intervals[i]);
+            else{
+                res[res.size() -  1][1] = max(intervals[i][1], res[res.size() - 1][1]);
+            }
+        }
+        return res;
+    }
+};
