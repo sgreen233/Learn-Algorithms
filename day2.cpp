@@ -65,3 +65,59 @@ public:
 };
 
 //https://leetcode.cn/problems/copy-list-with-random-pointer/submissions/548806531/?envType=study-plan-v2&envId=top-interview-150
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        //记录所有被复制的节点，一遍查找
+        unordered_map<Node*, Node*> oldTonew;
+        Node* heads,* tails;
+        heads = new Node(-1);
+        heads->next = NULL;
+        tails = heads;
+        while(head != NULL){
+            if(!oldTonew.count(head)){
+                tails->next = new Node(head->val);
+                tails = tails->next;
+                oldTonew[head] = tails;
+            }else{
+                tails->next =  oldTonew[head];
+                tails = tails->next;
+            }
+            //要做复制
+            if(head->random == NULL)tails->random = NULL;
+            else if(!oldTonew.count(head->random)){
+                Node* tmp = new Node(head->random->val);
+                tails->random = tmp;
+                oldTonew[head->random] = tmp;
+            }else{
+                tails->random = oldTonew[head->random];
+            }
+            head = head->next;
+        }
+        // while(heads!= NULL){
+        //     cout<<heads->val<<"  ";
+        //     if(heads->random !=NULL)cout<<heads->random->val;
+        //     else cout<<"NULL";
+        //     cout<<endl;
+        //     heads = heads->next;
+        // }
+        return heads->next;
+    }
+};
